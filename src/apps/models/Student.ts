@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, BeforeInsert, BeforeUpdate, JoinTable } from 'typeorm'
-import { Length, IsEmail, IsNotEmpty } from 'class-validator'
+import { Length, IsNotEmpty } from 'class-validator'
 import bcrypt from 'bcryptjs'
 
 import Classroom from './Classroom'
