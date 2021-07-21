@@ -1,6 +1,7 @@
 import { Router} from 'express'
 
-import authMiddleware from './apps/middlewares/authMiddleware'
+import AuthMiddleware from './apps/middlewares/AuthMiddleware'
+import StudentValidationMiddleware from './apps/middlewares/StudentValidationMiddleware'
 
 import MessageController from './apps/controllers/MessageController'
 import AuthController from './apps/controllers/AuthController'
@@ -23,64 +24,67 @@ routes.get('/', (request, response) => {
   response.sendFile(__dirname + '/index.html')
 })
 
-routes.post('/manager', ManagerController.store)
-routes.put('/manager/:id', ManagerController.update)
-routes.get('/manager/:id', ManagerController.find)
-routes.get('/manager', ManagerController.index)
+routes.post('/manager', AuthMiddleware, ManagerController.store)
+routes.put('/manager/:id', AuthMiddleware, ManagerController.update)
+routes.get('/manager/:id', AuthMiddleware, ManagerController.find)
+routes.get('/manager', AuthMiddleware, ManagerController.index)
 
-routes.get('/school', SchoolController.index)
-routes.get('/school/:id', SchoolController.find)
-routes.post('/school', SchoolController.store)
-routes.put('/school/:id', SchoolController.update)
-routes.delete('/school/:id', SchoolController.remove)
+routes.get('/school', AuthMiddleware, SchoolController.index)
+routes.get('/school/:id', AuthMiddleware, SchoolController.find)
+routes.post('/school', AuthMiddleware, SchoolController.store)
+routes.put('/school/:id', AuthMiddleware, SchoolController.update)
+routes.delete('/school/:id', AuthMiddleware, SchoolController.remove)
 
-routes.get('/teacher', TeacherController.index)
-routes.get('/teacher/:id', TeacherController.find)
+routes.get('/teacher', AuthMiddleware, TeacherController.index)
+routes.get('/teacher/:id', AuthMiddleware, TeacherController.find)
 routes.post('/teacher', TeacherController.store)
-routes.put('/teacher/:id', TeacherController.update)
-routes.delete('/teacher/:id', TeacherController.remove)
+routes.put('/teacher/:id', AuthMiddleware, TeacherController.update)
+routes.delete('/teacher/:id', AuthMiddleware, TeacherController.remove)
 
-routes.get('/document', DocumentController.index)
-routes.get('/document/:id', DocumentController.find)
-routes.post('/document', DocumentController.store)
-routes.put('/document/:id', DocumentController.update)
-routes.delete('/document/:id', DocumentController.remove)
+routes.get('/document', AuthMiddleware, DocumentController.index)
+routes.get('/document/:id', AuthMiddleware, DocumentController.find)
+routes.post('/document', AuthMiddleware, DocumentController.store)
+routes.put('/document/:id', AuthMiddleware, DocumentController.update)
+routes.delete('/document/:id', AuthMiddleware, DocumentController.remove)
 
-routes.get('/classroom', authMiddleware, ClassroomController.index)
-routes.get('/classroom/:id', ClassroomController.find)
-routes.post('/classroom', ClassroomController.store)
-routes.put('/classroom/:id', ClassroomController.update)
-routes.delete('/classroom/:id', ClassroomController.remove)
+routes.get('/classroom', AuthMiddleware, ClassroomController.index)
+routes.get('/classroom/:id', AuthMiddleware, ClassroomController.find)
+routes.post('/classroom', AuthMiddleware, ClassroomController.store)
+routes.put('/classroom/:id', AuthMiddleware, ClassroomController.update)
+routes.delete('/classroom/:id', AuthMiddleware, ClassroomController.remove)
 
-routes.get('/work', WorkController.index)
-routes.get('/work/:id', WorkController.find)
-routes.post('/work', WorkController.store)
-routes.put('/work/:id', WorkController.update)
-routes.delete('/work/:id', WorkController.remove)
+routes.get('/work', AuthMiddleware, WorkController.index)
+routes.get('/work/:id', AuthMiddleware, WorkController.find)
+routes.post('/work', AuthMiddleware, WorkController.store)
+routes.put('/work/:id', AuthMiddleware, WorkController.update)
+routes.delete('/work/:id', AuthMiddleware, WorkController.remove)
 
-routes.get('/advice', AdviceController.index)
-routes.get('/advice/:id', AdviceController.find)
-routes.post('/advice', AdviceController.store)
-routes.put('/advice/:id', AdviceController.update)
-routes.delete('/advice/:id', AdviceController.remove)
+routes.get('/advice', AuthMiddleware, AdviceController.index)
+routes.get('/advice/:id', AuthMiddleware, AdviceController.find)
+routes.post('/advice', AuthMiddleware, AdviceController.store)
+routes.put('/advice/:id', AuthMiddleware, AdviceController.update)
+routes.delete('/advice/:id', AuthMiddleware, AdviceController.remove)
 
-routes.get('/chat', ChatController.index)
-routes.get('/chat/:id', ChatController.find)
-routes.post('/chat', ChatController.store)
-routes.delete('/chat/:id', ChatController.remove)
+routes.get('/chat', AuthMiddleware, ChatController.index)
+routes.get('/chat/:id', AuthMiddleware, ChatController.find)
+routes.post('/chat', AuthMiddleware, ChatController.store)
+routes.delete('/chat/:id', AuthMiddleware, ChatController.remove)
 
-routes.get('/student', StudentController.index)
-routes.get('/student/:id', StudentController.find)
-routes.post('/student', StudentController.store)
-routes.put('/student/:id', AdviceController.update)
-routes.delete('/student/:id', StudentController.remove)
+routes.get('/student', AuthMiddleware, StudentController.index)
+routes.get('/student/:id', AuthMiddleware, StudentController.find)
+routes.post('/student', StudentValidationMiddleware, StudentController.store)
+routes.put('/student/:id', AuthMiddleware, AdviceController.update)
+routes.delete('/student/:id', AuthMiddleware, StudentController.remove)
 
-routes.post('/message', authMiddleware, MessageController.create)
+routes.post('/message', AuthMiddleware, MessageController.create)
 
 routes.post('/classroom_student/:id', ClassroomStudentController.store)
 routes.post('/classroom_document/:id', ClassroomDocumentController.store)
 
 routes.post('/user', UserController.store)
-routes.post('/authenticate', AuthController.authenticate)
+
+routes.post('/manager_authenticate', AuthController.managerAuthenticate)
+routes.post('/teacher_authenticate', AuthController.teacherAuthenticate)
+routes.post('/student_authenticate', AuthController.studentAuthenticate)
 
 export default routes;

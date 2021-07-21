@@ -25,7 +25,7 @@ export default {
     const { name, email, password, phone } = request.body
     const is_verified = false;
     const teacherRespository = getRepository(Teacher)
-    const teacherExists = await teacherRespository.findOne({ where: { name }}) 
+    const teacherExists = await teacherRespository.findOne({ where: { email }}) 
     if(teacherExists) {
       return response.sendStatus(409)
     }

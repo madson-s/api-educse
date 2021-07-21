@@ -24,11 +24,16 @@ export default {
   async store(request: Request, response: Response) {
     const { name, email, password, username } = request.body
     const is_verified = false;
+
     const studentRespository = getRepository(Student)
-    const studentExists = await studentRespository.findOne({ where: { name }}) 
+    const studentExists = await studentRespository.findOne({ where: [{ name }, { email }]}) 
     if(studentExists) {
       return response.sendStatus(409)
     }
+
+    
+    
+
     const student = studentRespository.create({ name, email, username, password, is_verified })
     await studentRespository.save(student)
     return response.json(student)
