@@ -23,7 +23,7 @@ export default {
     return response.json(school)
   },
 
-  async store(request: Request, response: Response) {
+  async create(request: Request, response: Response) {
     const { name, city, manager } = request.body
     const schoolRespository = getRepository(School)
     const schoolExists = await schoolRespository.findOne({ where: { name }}) 

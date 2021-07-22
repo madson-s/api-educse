@@ -21,7 +21,7 @@ export default {
     return response.json(student)
   },
 
-  async store(request: Request, response: Response) {
+  async create(request: Request, response: Response) {
     const { name, email, password, username } = request.body
     const is_verified = false
     const studentRespository = getRepository(Student)

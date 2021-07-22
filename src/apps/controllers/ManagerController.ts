@@ -23,7 +23,7 @@ export default {
     return response.json(manager)
   },
 
-  async store(request: Request, response: Response) {
+  async create(request: Request, response: Response) {
     const { name, email, password, phone } = request.body
 
     const managerRespository = getRepository(Manager)
@@ -51,4 +51,16 @@ export default {
     await managerRespository.save(manager)
     return response.json(manager)
   },
+
+  async remove(request: Request, response: Response) {
+    const { id } = request.params
+
+    const managerRespository = getRepository(Manager) 
+    const manager = await managerRespository.findOne({ where: { id }}) 
+    if(!manager) {
+      return response.sendStatus(404)
+    }
+    await managerRespository.remove(manager)
+    return response.sendStatus(200)
+  }
 }

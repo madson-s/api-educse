@@ -21,7 +21,7 @@ export default {
     return response.json(document)
   },
 
-  async store(request: Request, response: Response) {
+  async create(request: Request, response: Response) {
     const { title, teacher } = request.body
     const documentRespository = getRepository(Document)
     const document = documentRespository.create({ title, teacher })

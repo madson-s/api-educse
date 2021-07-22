@@ -21,7 +21,7 @@ export default {
     return response.json(advice)
   },
 
-  async store(request: Request, response: Response) {
+  async create(request: Request, response: Response) {
     const { title, description, deadline, classroom } = request.body
     const adviceRespository = getRepository(Advice)
     const advice = adviceRespository.create({ title, description, deadline, classroom })

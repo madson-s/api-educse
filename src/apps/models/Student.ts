@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, BeforeInsert, BeforeUpdate, JoinTable } from 'typeorm'
-import { Length, IsNotEmpty } from 'class-validator'
 import bcrypt from 'bcryptjs'
 
 import Classroom from './Classroom'
@@ -11,8 +10,6 @@ export default class Student {
   id: number
 
   @Column()
-  @IsNotEmpty()
-  @Length(2, 30)
   name: string
 
   @Column()
@@ -22,8 +19,6 @@ export default class Student {
   username: string
 
   @Column()
-  @IsNotEmpty()
-  @Length(8, 15)
   password: string
 
   @Column()
