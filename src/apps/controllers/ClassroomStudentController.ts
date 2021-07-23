@@ -11,7 +11,7 @@ export default {
     const { studentId } = request.body
     const classroomRespository = getRepository(Classroom)
     const studentRespository = getRepository(Student)
-    let classroom = await classroomRespository.findOne({ where: { id }})
+    const classroom = await classroomRespository.findOne({ where: { id }})
     const student = await studentRespository.findOne({ where: { id: studentId }, relations: ['classrooms']})
     if(!student || !classroom)
       return response.sendStatus(404)

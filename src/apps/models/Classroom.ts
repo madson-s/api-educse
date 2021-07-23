@@ -6,6 +6,8 @@ import Advice from './Advice'
 import Document from './Document'
 import Chat from './Chat'
 import Student from './Student'
+import School from './School'
+
 
 @Entity('classes')
 export default class Classroom {
@@ -28,6 +30,10 @@ export default class Classroom {
   @ManyToOne(() => Teacher, teacher => teacher.classrooms)
   @JoinColumn({ name: 'teacher_id' })
   teacher: Teacher
+
+  @ManyToOne(() => School, school => school.classrooms)
+  @JoinColumn({ name: 'schoolId'})
+  school: School
 
   @ManyToMany(() => Document, document => document.classrooms)
   documents: Document[]

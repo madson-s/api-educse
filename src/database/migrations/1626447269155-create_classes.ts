@@ -15,18 +15,30 @@ export class createClasses1626447269155 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
+            name: 'name',
+            type: 'varchar',
+          },
+          {
             name: 'teacher_id',
             type: 'integer',
           },
           {
-            name: 'name',
-            type: 'varchar',
-          }
+            name: 'schoolId',
+            type: 'integer',
+          },
         ],
         foreignKeys: [
           {
             name: 'ClassTeacher',
             columnNames: ['teacher_id'],
+            referencedTableName: 'teachers',
+            referencedColumnNames: ['id'],
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
+          },
+          {
+            name: 'ClassSchool',
+            columnNames: ['schoolId'],
             referencedTableName: 'teachers',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',

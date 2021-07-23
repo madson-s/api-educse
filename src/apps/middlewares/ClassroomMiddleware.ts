@@ -14,6 +14,8 @@ class CreateClassroomParms extends UpdateClassroomParms {
   @IsNotEmpty()
   @IsNumber()
   teacher: number
+
+  school: number
 }
 
 export default {
@@ -37,12 +39,13 @@ export default {
   
   async create(request: Request, response: Response, next: NextFunction) {
     
-    const { name, teacher } = request.body
+    const { name, teacher, school } = request.body
     
     let classroom = new CreateClassroomParms()
     
     classroom.name = name
     classroom.teacher = teacher
+    classroom.teacher = school
   
     try{
       await validateOrReject(classroom)

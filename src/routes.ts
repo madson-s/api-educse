@@ -16,6 +16,7 @@ import MessageController from './apps/controllers/MessageController'
 import AuthController from './apps/controllers/AuthController'
 import ManagerController from './apps/controllers/ManagerController'
 import SchoolController from './apps/controllers/SchoolController'
+import SchoolTeacherController from './apps/controllers/SchoolTeacherController'
 import TeacherController from './apps/controllers/TeacherController'
 import DocumentController from './apps/controllers/DocumentController'
 import ClassroomController from './apps/controllers/ClassroomController'
@@ -87,7 +88,8 @@ routes.delete('/student/:id', AuthMiddleware, StudentController.remove)
 
 routes.post('/message', AuthMiddleware, MessageController.create)
 
-routes.post('/classroom_student/:id', ClassroomStudentController.store)
+routes.post('/school_teacher/:id', SchoolTeacherController.create)
+routes.post('/classroom_document/:id', ClassroomDocumentController.store)
 routes.post('/classroom_document/:id', ClassroomDocumentController.store)
 
 routes.post('/manager_authenticate', AuthenticationMiddleware.manager, AuthController.managerAuthenticate)

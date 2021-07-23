@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne, ManyToMany} from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn, ManyToOne, ManyToMany} from 'typeorm'
 
 import Manager from './Manager'
 import Teacher from './Teacher'
+import Classroom from './Classroom'
 
 @Entity('schools')
 export default class School {
@@ -19,6 +20,9 @@ export default class School {
   @JoinColumn({ name: 'manager_id'})
   manager: Manager
 
+  @OneToMany(() => Classroom, classroom => classroom.school)
+  classrooms: Classroom[]
+  
   @ManyToMany(() => Teacher, teacher => teacher.schools)
   teachers: Teacher[]
 }
