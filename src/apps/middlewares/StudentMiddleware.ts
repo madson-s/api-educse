@@ -8,7 +8,6 @@ class UpdateStudentParams {
   @Length(2, 30)
   name: string
 
-  @IsNotEmpty()
   @IsString()
   @Length(2, 50)
   email: string
@@ -18,7 +17,6 @@ class UpdateStudentParams {
   @Length(8, 15)
   password: string
 
-  @IsNotEmpty()
   @IsString()
   @Length(2, 15)
   username: string
