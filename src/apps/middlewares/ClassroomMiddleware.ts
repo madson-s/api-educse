@@ -15,6 +15,8 @@ class CreateClassroomParms extends UpdateClassroomParms {
   @IsNumber()
   teacher: number
 
+  @IsNotEmpty()
+  @IsNumber()
   school: number
 }
 
@@ -45,7 +47,7 @@ export default {
     
     classroom.name = name
     classroom.teacher = teacher
-    classroom.teacher = school
+    classroom.school = school
   
     try{
       await validateOrReject(classroom)

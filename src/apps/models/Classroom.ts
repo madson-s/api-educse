@@ -28,11 +28,11 @@ export default class Classroom {
   advices: Work[]
 
   @ManyToOne(() => Teacher, teacher => teacher.classrooms)
-  @JoinColumn({ name: 'teacher_id' })
+  @JoinColumn()
   teacher: Teacher
 
   @ManyToOne(() => School, school => school.classrooms)
-  @JoinColumn({ name: 'schoolId'})
+  @JoinColumn()
   school: School
 
   @ManyToMany(() => Document, document => document.classrooms)

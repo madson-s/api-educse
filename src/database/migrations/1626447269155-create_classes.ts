@@ -19,7 +19,7 @@ export class createClasses1626447269155 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'teacher_id',
+            name: 'teacherId',
             type: 'integer',
           },
           {
@@ -30,7 +30,7 @@ export class createClasses1626447269155 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'ClassTeacher',
-            columnNames: ['teacher_id'],
+            columnNames: ['teacherId'],
             referencedTableName: 'teachers',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
@@ -39,7 +39,7 @@ export class createClasses1626447269155 implements MigrationInterface {
           {
             name: 'ClassSchool',
             columnNames: ['schoolId'],
-            referencedTableName: 'teachers',
+            referencedTableName: 'schools',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',

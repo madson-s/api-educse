@@ -18,14 +18,6 @@ export class createStudentsClasses1626455607086 implements MigrationInterface {
             unsigned: true,
             isPrimary: true,
           },
-          {
-            name: 'grade',
-            type: 'double',
-          },
-          {
-            name: 'is_banned',
-            type: 'boolean',
-          }
         ],
         foreignKeys: [
           {

@@ -6,17 +6,44 @@ import Student from '../models/Student'
 
 export default {
 
-  async store(request: Request, response: Response) {
-    const { id } = request.params
-    const { studentId } = request.body
+  async create(request: Request, response: Response) {
+    const { studentId, classroomId } = request.body
+    
     const classroomRespository = getRepository(Classroom)
     const studentRespository = getRepository(Student)
-    const classroom = await classroomRespository.findOne({ where: { id }})
+    
+    const classroom = await classroomRespository.findOne({ where: { id: classroomId }})
     const student = await studentRespository.findOne({ where: { id: studentId }, relations: ['classrooms']})
-    if(!student || !classroom)
-      return response.sendStatus(404)
-    student.classrooms.push(classroom)
+    
+    if(!student || !classroom) {
+      return response.sendStatus(400)
+    }
+    
+     student.classrooms.push(classroom)
+    
     await studentRespository.save(student)
+    
+    return response.sendStatus(200)
+  },
+
+  async remove(request: Request, response: Response) {
+    
+    const { studentId, classroomId } = request.body
+    
+    const classroomRespository = getRepository(Classroom)
+    const studentRespository = getRepository(Student)
+    
+    const classroom = await classroomRespository.findOne({ where: { id: classroomId }})
+    const student = await studentRespository.findOne({ where: { id: studentId }, relations: ['classrooms']})
+    
+    if(!student || !classroom){
+      return response.sendStatus(400)
+    }
+
+    student.classrooms.filter(classroom => classroom.id !== classroomId)
+    
+    await studentRespository.save(student)
+
     return response.sendStatus(200)
   },
 }

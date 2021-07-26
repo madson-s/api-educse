@@ -90,7 +90,9 @@ routes.post('/message', AuthMiddleware, MessageController.create)
 
 routes.post('/school_teacher/:id', SchoolTeacherController.create)
 routes.post('/classroom_document/:id', ClassroomDocumentController.store)
-routes.post('/classroom_document/:id', ClassroomDocumentController.store)
+
+routes.post('/classroom_student', ClassroomStudentController.create)
+routes.delete('/classroom_student', ClassroomStudentController.remove)
 
 routes.post('/manager_authenticate', AuthenticationMiddleware.manager, AuthController.managerAuthenticate)
 routes.post('/teacher_authenticate', AuthenticationMiddleware.teacher,  AuthController.teacherAuthenticate)
