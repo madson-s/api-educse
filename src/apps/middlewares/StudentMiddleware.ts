@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { validateOrReject, isEmpty, Length, IsNotEmpty, IsString } from 'class-validator'
+import { validateOrReject, isEmpty, Length, IsNotEmpty, IsString,IsOptional } from 'class-validator'
 
 class UpdateStudentParams {
 
@@ -8,6 +8,7 @@ class UpdateStudentParams {
   @Length(2, 30)
   name: string
 
+  @IsOptional()
   @IsString()
   @Length(2, 50)
   email: string
@@ -17,6 +18,7 @@ class UpdateStudentParams {
   @Length(8, 15)
   password: string
 
+  @IsOptional()
   @IsString()
   @Length(2, 15)
   username: string
