@@ -6,16 +6,29 @@ import Document from '../models/Document'
 
 export default {
 
-  async store(request: Request, response: Response) {
-    const { id } = request.params
-    const { documentId } = request.body
+  async create(request: Request, response: Response) {
+
+    const { classroomId, documentId } = request.body
     const classroomRespository = getRepository(Classroom)
     const studentRespository = getRepository(Document)
-    let classroom = await classroomRespository.findOne({ where: { id }})
+    let classroom = await classroomRespository.findOne({ where: { id: classroomId }})
     const document = await studentRespository.findOne({ where: { id: documentId }, relations: ['classrooms']})
     if(!document || !classroom)
       return response.sendStatus(404)
     document.classrooms.push(classroom)
+    await studentRespository.save(document)
+    return response.sendStatus(200)
+  },
+
+  async remove(request: Request, response: Response) {
+    const { classroomId, documentId } = request.body
+    const classroomRespository = getRepository(Classroom)
+    const studentRespository = getRepository(Document)
+    let classroom = await classroomRespository.findOne({ where: { id: classroomId }})
+    const document = await studentRespository.findOne({ where: { id: documentId }, relations: ['classrooms']})
+    if(!document || !classroom)
+      return response.sendStatus(404)
+    document.classrooms.filter(classroom => classroom.id !== classroomId)
     await studentRespository.save(document)
     return response.sendStatus(200)
   },

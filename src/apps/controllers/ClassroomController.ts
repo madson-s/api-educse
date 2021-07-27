@@ -16,7 +16,12 @@ export default {
   async find(request: Request, response: Response) {
     const { id } = request.params
     const classroomRespository = getRepository(Classroom) 
-    const classroom = await classroomRespository.findOne({ where: { id }, relations: ['students','documents']}) 
+
+    const classroom = await classroomRespository.findOne({ 
+      where: { id }, 
+      relations: ['school', 'teacher', 'students','documents', 'works', 'advices']
+    }) 
+
     if(!classroom) {
       return response.sendStatus(404)
     }

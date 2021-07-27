@@ -1,33 +1,33 @@
 import { Request, Response, NextFunction } from "express"
 import { validateOrReject, IsNotEmpty, IsNumber } from 'class-validator'
 
-class RemoveClassroomStudentParms {
+class RemoveClassroomDocumentParms {
  
   @IsNotEmpty()
   @IsNumber()
-  studentId: number
+  documentId: number
 
   @IsNotEmpty()
   @IsNumber()
   classroomId: number
 }
 
-class CreateClassroomStudentParms extends RemoveClassroomStudentParms {
+class CreateClassroomDocumentParms extends RemoveClassroomDocumentParms {
   
 }
 
 export default {
   async remove(request: Request, response: Response, next: NextFunction) {
   
-    const { classroomId, studentId } = request.body
+    const { classroomId, documentId } = request.body
     
-    const classroomStudent = new RemoveClassroomStudentParms()
+    const classroomDocument = new RemoveClassroomDocumentParms()
     
-    classroomStudent.studentId = studentId
-    classroomStudent.classroomId = classroomId
+    classroomDocument.documentId = documentId
+    classroomDocument.classroomId = classroomId
   
     try{
-      await validateOrReject(classroomStudent)
+      await validateOrReject(classroomDocument)
   
       return next()
     }
@@ -38,15 +38,15 @@ export default {
   
   async create(request: Request, response: Response, next: NextFunction) {
     
-    const { classroomId, studentId } = request.body
+    const { classroomId, documentId } = request.body
     
-    const classroomStudent = new CreateClassroomStudentParms()
+    const classroomDocument = new CreateClassroomDocumentParms()
     
-    classroomStudent.studentId = studentId
-    classroomStudent.classroomId = classroomId
+    classroomDocument.documentId = documentId
+    classroomDocument.classroomId = classroomId
   
     try{
-      await validateOrReject(classroomStudent)
+      await validateOrReject(classroomDocument)
       
       return next()
     }

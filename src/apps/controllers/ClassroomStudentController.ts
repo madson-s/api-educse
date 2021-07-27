@@ -19,7 +19,7 @@ export default {
       return response.sendStatus(400)
     }
     
-     student.classrooms.push(classroom)
+    student.classrooms.push(classroom)
     
     await studentRespository.save(student)
     

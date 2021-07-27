@@ -5,8 +5,11 @@ import AuthMiddleware from './apps/middlewares/AuthMiddleware'
 import ManagerMiddleware from './apps/middlewares/ManagerMiddleware'
 import SchoolMiddleware  from './apps/middlewares/SchoolMiddleware'
 import TeacherMiddleware from './apps/middlewares/TeacherMiddleware'
+import SchoolTeacherMiddleware from './apps/middlewares/SchoolTeacherMiddleware'
 import DocumentMiddleware from './apps/middlewares/DocumentMiddleware'
 import ClassroomMiddleware from './apps/middlewares/ClassroomMiddleware'
+import ClassroomStudentMiddleware from './apps/middlewares/ClassroomStudentMiddleware'
+import ClassroomDocumentMiddleware from './apps/middlewares/ClassroomDocumentMiddleware'
 import WorkMiddleware from './apps/middlewares/WorkMiddleware'
 import StudentMiddleware from './apps/middlewares/StudentMiddleware'
 import AdviceMiddleware from './apps/middlewares/AdviceMiddleware'
@@ -28,10 +31,6 @@ import ChatController from './apps/controllers/ChatController'
 import StudentController from './apps/controllers/StudentController'
 
 const routes = Router()
-
-routes.get('/', (request, response) => {
-  response.sendFile(__dirname + '/index.html')
-})
 
 routes.get('/manager', AuthMiddleware, ManagerController.index)
 routes.get('/manager/:id', AuthMiddleware, ManagerController.find)
@@ -88,14 +87,17 @@ routes.delete('/student/:id', AuthMiddleware, StudentController.remove)
 
 routes.post('/message', AuthMiddleware, MessageController.create)
 
-routes.post('/school_teacher/:id', SchoolTeacherController.create)
-routes.post('/classroom_document/:id', ClassroomDocumentController.store)
+routes.post('/school_teacher', SchoolTeacherMiddleware.create, SchoolTeacherController.create)
+routes.post('/school_teacher', SchoolTeacherMiddleware.remove, SchoolTeacherController.remove)
 
-routes.post('/classroom_student', ClassroomStudentController.create)
-routes.delete('/classroom_student', ClassroomStudentController.remove)
+routes.post('/classroom_document', ClassroomDocumentMiddleware.create, ClassroomDocumentController.create)
+routes.post('/classroom_document', ClassroomDocumentMiddleware.remove, ClassroomDocumentController.remove)
+
+routes.post('/classroom_student', ClassroomStudentMiddleware.create, ClassroomStudentController.create)
+routes.delete('/classroom_student', ClassroomStudentMiddleware.remove, ClassroomStudentController.remove)
 
 routes.post('/manager_authenticate', AuthenticationMiddleware.manager, AuthController.managerAuthenticate)
 routes.post('/teacher_authenticate', AuthenticationMiddleware.teacher,  AuthController.teacherAuthenticate)
 routes.post('/student_authenticate', AuthenticationMiddleware.student, AuthController.studentAuthenticate)
 
-export default routes;
+export default routes
