@@ -15,6 +15,7 @@ export default {
     const { id } = request.params
     const studentRespository = getRepository(Student) 
     const student = await studentRespository.findOne({ where: { id }, relations: ['classrooms', 'classrooms.school']}) 
+    
     if(!student) {
       return response.sendStatus(404)
     }
