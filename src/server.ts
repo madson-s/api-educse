@@ -15,6 +15,8 @@ const server = createServer(app)
 const io = new socketIo.Server(server)
 const PORT = 8100
 
+const connectedUsers = <any>[];
+
 let port = process.env.PORT || PORT;
 
 app.use(cors())
@@ -25,35 +27,26 @@ app.use((request, response, next) => {
 })
 app.use(routes)
 
-io.on('connection', function (client) {
-
-  console.log('client connect...', client.id);
-
-  client.on('typing', function name(data) {
-    console.log(data);
-    io.emit('typing', data)
+io.on('connection', function (socket) {
+  
+  socket.on('joinClassroom', ({ classroom }) => {
+    socket.join(classroom)
+    console.log(socket.id + ' -> Join to ' + classroom)
   })
 
-  client.on('message', function name(data) {
-    console.log(data);
-    io.emit('message', data)
+  socket.on('message', ({ message, classroom }) => {
+    socket.broadcast.to(classroom).emit('Message', message)
   })
 
-  client.on('location', function name(data) {
-    console.log(data);
-    io.emit('location', data);
+  console.log('client connect...', socket.id);
+
+  socket.on('disconnect', function () {
+    console.log('client disconnect...', socket.id)
+    delete connectedUsers[socket.id]
   })
 
-  client.on('connect', function () {
-  })
-
-  client.on('disconnect', function () {
-    console.log('client disconnect...', client.id)
-    // handleDisconnect()
-  })
-
-  client.on('error', function (err) {
-    console.log('received error from client:', client.id)
+  socket.on('error', function (err) {
+    console.log('received error from client:', socket.id)
     console.log(err)
   })
 })
