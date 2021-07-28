@@ -14,7 +14,7 @@ export default {
   async find(request: Request, response: Response) {
     const { id } = request.params
     const studentRespository = getRepository(Student) 
-    const student = await studentRespository.findOne({ where: { id }, relations: ['classrooms']}) 
+    const student = await studentRespository.findOne({ where: { id }, relations: ['classrooms', 'classrooms.school']}) 
     if(!student) {
       return response.sendStatus(404)
     }
