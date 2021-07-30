@@ -1,5 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm'
+
 import Chat from './Chat';
+import Classroom from './Classroom';
+import Student from './Student';
+import Teacher from './Teacher';
 
 @Entity('messages')
 export default class Message {
@@ -11,15 +15,20 @@ export default class Message {
   text: string
 
   @Column()
-  origin: string;
+  sentAt: Date
 
   @Column()
-  sent_at: Date
+  createdAt: Date
 
-  @Column()
-  create_at: Date
+  @ManyToOne(() => Teacher)
+  @JoinColumn()
+  teacher: Teacher;
 
-  @ManyToOne(() => Chat, chat => chat.messages)
-  @JoinColumn({ name: 'chat_id' })
-  chat: Chat
+  @ManyToOne(() => Student)
+  @JoinColumn()
+  student: Student;
+
+  @ManyToOne(() => Classroom, classroom => classroom.messages)
+  @JoinColumn()
+  classroom: Classroom
 }

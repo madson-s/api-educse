@@ -19,27 +19,49 @@ export class createMessages1620766334738 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'origin',
-            type: 'varchar',
-          },
-          {
-            name: 'create_at',
+            name: 'createdAt',
             type: 'datetime',
           },
           {
-            name: 'sent_at',
+            name: 'sentAt',
             type: 'datetime',
           },
           {
-            name: 'chat_id',
+            name: 'classroomId',
             type: 'integer',
-          }
+          },
+          {
+            name: 'teacherId',
+            type: 'integer',
+            isNullable: true,
+          },
+          {
+            name: 'studentId',
+            type: 'integer',
+            isNullable: true,
+          },
         ],
         foreignKeys: [
           {
-            name: 'MessageChat',
-            columnNames: ['chat_id'],
-            referencedTableName: 'chats',
+            name: 'MessageClassroom',
+            columnNames: ['classroomId'],
+            referencedTableName: 'classrooms',
+            referencedColumnNames: ['id'],
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
+          },
+          {
+            name: 'MessageTeacher',
+            columnNames: ['teacherId'],
+            referencedTableName: 'teachers',
+            referencedColumnNames: ['id'],
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
+          },
+          {
+            name: 'MessageStudents',
+            columnNames: ['studentId'],
+            referencedTableName: 'students',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',

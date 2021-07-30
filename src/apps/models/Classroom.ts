@@ -7,7 +7,7 @@ import Document from './Document'
 import Chat from './Chat'
 import Student from './Student'
 import School from './School'
-
+import Message from './Message'
 
 @Entity('classes')
 export default class Classroom {
@@ -26,6 +26,9 @@ export default class Classroom {
 
   @OneToMany(() => Advice, advice => advice.classroom)
   advices: Work[]
+
+  @OneToMany(() => Message, message => message.classroom)
+  messages: Message[]
 
   @ManyToOne(() => Teacher, teacher => teacher.classrooms)
   @JoinColumn()
