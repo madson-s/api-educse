@@ -4,16 +4,16 @@ export class createDocumentsClasses1626453432152 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
       await queryRunner.createTable(new Table({
-        name: 'documents_classes',
+        name: 'documents_classrooms',
         columns: [
           {
-            name: 'document_id',
+            name: 'documentId',
             type: 'integer',
             unsigned: true,
             isPrimary: true,
           },
           {
-            name: 'class_id',
+            name: 'classroomId',
             type: 'integer',
             unsigned: true,
             isPrimary: true,
@@ -22,7 +22,7 @@ export class createDocumentsClasses1626453432152 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'DocumentClassDocument',
-            columnNames: ['document_id'],
+            columnNames: ['documentId'],
             referencedTableName: 'documents',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
@@ -30,8 +30,8 @@ export class createDocumentsClasses1626453432152 implements MigrationInterface {
           },
           {
             name: 'DocumentClassClass',
-            columnNames: ['class_id'],
-            referencedTableName: 'classes',
+            columnNames: ['classroomId'],
+            referencedTableName: 'classrooms',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',
@@ -41,7 +41,7 @@ export class createDocumentsClasses1626453432152 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.dropTable('documents_classes');
+      await queryRunner.dropTable('documents_classrooms');
     }
 
 }

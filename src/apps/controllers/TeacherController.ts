@@ -23,13 +23,13 @@ export default {
 
   async create(request: Request, response: Response) {
     const { name, email, password, phone } = request.body
-    const is_verified = false;
+    const isVerified = false;
     const teacherRespository = getRepository(Teacher)
     const teacherExists = await teacherRespository.findOne({ where: { email }}) 
     if(teacherExists) {
       return response.sendStatus(409)
     }
-    const teacher = teacherRespository.create({ name, email, password, phone, is_verified })
+    const teacher = teacherRespository.create({ name, email, password, phone, isVerified })
     await teacherRespository.save(teacher)
     return response.json(teacher)
   },

@@ -17,7 +17,7 @@ export default class School {
   city: string
 
   @ManyToOne(() => Manager)
-  @JoinColumn({ name: 'manager_id'})
+  @JoinColumn()
   manager: Manager
 
   @OneToMany(() => Classroom, classroom => classroom.school)

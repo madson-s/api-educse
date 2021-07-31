@@ -13,18 +13,18 @@ export default class Document {
   title: string
 
   @ManyToOne(() => Teacher, teacher => teacher.documents)
-  @JoinColumn({ name: 'teacher_id'})
+  @JoinColumn()
   teacher: Teacher
 
   @ManyToMany(() => Classroom, classroom => classroom.documents)
   @JoinTable({
     name: 'documents_classes',
     joinColumn: {
-      name: 'document_id',
+      name: 'documentId',
       referencedColumnName: 'id'
     },
     inverseJoinColumn: {
-      name: 'class_id',
+      name: 'classroomId',
       referencedColumnName: 'id',
     }
   })

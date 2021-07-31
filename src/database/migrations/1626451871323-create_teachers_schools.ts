@@ -7,13 +7,13 @@ export class createTeachersSchools1626451871323 implements MigrationInterface {
         name: 'teachers_schools',
         columns: [
           {
-            name: 'teacher_id',
+            name: 'teacherId',
             type: 'integer',
             unsigned: true,
             isPrimary: true,
           },
           {
-            name: 'school_id',
+            name: 'schoolId',
             type: 'integer',
             unsigned: true,
             isPrimary: true,
@@ -22,7 +22,7 @@ export class createTeachersSchools1626451871323 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'TeacherSchoolTeacher',
-            columnNames: ['teacher_id'],
+            columnNames: ['teacherId'],
             referencedTableName: 'teachers',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
@@ -30,7 +30,7 @@ export class createTeachersSchools1626451871323 implements MigrationInterface {
           },
           {
             name: 'TeacherSchoolSchool',
-            columnNames: ['school_id'],
+            columnNames: ['schoolId'],
             referencedTableName: 'schools',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',

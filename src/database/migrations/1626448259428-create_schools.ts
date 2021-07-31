@@ -15,7 +15,7 @@ export class createSchools1626448259428 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'manager_id',
+            name: 'managerId',
             type: 'integer',
           },
           {
@@ -30,7 +30,7 @@ export class createSchools1626448259428 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'SchoolManager',
-            columnNames: ['manager_id'],
+            columnNames: ['managerId'],
             referencedTableName: 'managers',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',

@@ -9,7 +9,7 @@ import Student from './Student'
 import School from './School'
 import Message from './Message'
 
-@Entity('classes')
+@Entity('classrooms')
 export default class Classroom {
 
   @PrimaryGeneratedColumn('increment')    

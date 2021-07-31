@@ -15,15 +15,15 @@ export class createChats1626456096060 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'class_id',
+            name: 'classroomId',
             type: 'integer',
           },
         ],
         foreignKeys: [
           {
             name: 'ChatClass',
-            columnNames: ['class_id'],
-            referencedTableName: 'classes',
+            columnNames: ['classroomId'],
+            referencedTableName: 'classrooms',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',

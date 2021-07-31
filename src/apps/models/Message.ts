@@ -31,4 +31,8 @@ export default class Message {
   @ManyToOne(() => Classroom, classroom => classroom.messages)
   @JoinColumn()
   classroom: Classroom
+
+  @ManyToOne(() => Chat, chat => chat.messages)
+  @JoinColumn()
+  chat: Chat
 }

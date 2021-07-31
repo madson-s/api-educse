@@ -24,25 +24,23 @@ export default class Teacher {
   password: string
 
   @Column()
-  is_verified: boolean
+  isVerified: boolean
 
   @OneToMany(() => Classroom, classroom => classroom.teacher)
-  @JoinColumn({ name: 'teacher_id'})
   classrooms: Classroom[]
 
   @OneToMany(() => Document, document => document.teacher)
-  @JoinColumn({ name: 'teacher_id'})
   documents: Document[]
 
   @ManyToMany(() => School, school => school.teachers)
   @JoinTable({
     name: 'teachers_schools',
     joinColumn: {
-      name: 'teacher_id',
+      name: 'teacherId',
       referencedColumnName: 'id'
     },
     inverseJoinColumn: {
-      name: 'school_id',
+      name: 'schoolId',
       referencedColumnName: 'id',
     }
   })

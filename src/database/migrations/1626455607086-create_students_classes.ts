@@ -4,7 +4,7 @@ export class createStudentsClasses1626455607086 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
       await queryRunner.createTable(new Table({
-        name: 'students_classrooms_classes',
+        name: 'students_classrooms_classrooms',
         columns: [
           {
             name: 'studentsId',
@@ -13,7 +13,7 @@ export class createStudentsClasses1626455607086 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: 'classesId',
+            name: 'classroomsId',
             type: 'integer',
             unsigned: true,
             isPrimary: true,
@@ -30,8 +30,8 @@ export class createStudentsClasses1626455607086 implements MigrationInterface {
           },
           {
             name: 'StudentClassClass',
-            columnNames: ['classesId'],
-            referencedTableName: 'classes',
+            columnNames: ['classroomsId'],
+            referencedTableName: 'classrooms',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',

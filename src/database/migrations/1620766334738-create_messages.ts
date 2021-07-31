@@ -31,6 +31,10 @@ export class createMessages1620766334738 implements MigrationInterface {
             type: 'integer',
           },
           {
+            name: 'chatId',
+            type: 'integer',
+          },
+          {
             name: 'teacherId',
             type: 'integer',
             isNullable: true,
@@ -46,6 +50,14 @@ export class createMessages1620766334738 implements MigrationInterface {
             name: 'MessageClassroom',
             columnNames: ['classroomId'],
             referencedTableName: 'classrooms',
+            referencedColumnNames: ['id'],
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
+          },
+          {
+            name: 'MessageChat',
+            columnNames: ['chatId'],
+            referencedTableName: 'chats',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',

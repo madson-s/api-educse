@@ -15,7 +15,7 @@ export class createDocuments1626452975576 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'teacher_id',
+            name: 'teacherId',
             type: 'integer',
           },
           {
@@ -26,7 +26,7 @@ export class createDocuments1626452975576 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'DocumentTeacher',
-            columnNames: ['teacher_id'],
+            columnNames: ['teacherId'],
             referencedTableName: 'teachers',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',

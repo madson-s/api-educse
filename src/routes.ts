@@ -85,7 +85,8 @@ routes.post('/student', StudentMiddleware.create, StudentController.create)
 routes.put('/student/:id', AuthMiddleware, StudentMiddleware.update, AdviceController.update)
 routes.delete('/student/:id', AuthMiddleware, StudentController.remove)
 
-routes.post('/message', AuthMiddleware, MessageController.create)
+routes.post('/student_message', AuthMiddleware, MessageController.createStudentMessage)
+routes.post('/teacher_message', AuthMiddleware, MessageController.createTeacherMessage)
 
 routes.post('/school_teacher', SchoolTeacherMiddleware.create, SchoolTeacherController.create)
 routes.post('/school_teacher', SchoolTeacherMiddleware.remove, SchoolTeacherController.remove)

@@ -9,7 +9,7 @@ export default class Chat {
   id: number
 
   @OneToOne(() => Classroom, classroom => classroom.chat)
-  @JoinColumn({ name: 'class_id'})
+  @JoinColumn()
   classroom: Classroom
 
   @OneToMany(() => Message, message => message.chat)

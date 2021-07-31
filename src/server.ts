@@ -10,8 +10,6 @@ import routes from './routes'
 import './types/method-override'
 import './database/connect'
 
-import { createMessage } from './apps/controllers/MessageController'
-
 const app = express()
 const server = http.createServer(app)
 const io = new SocketIO(server)

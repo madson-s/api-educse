@@ -15,7 +15,7 @@ export class createAdvices1626452861713 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'class_id',
+            name: 'classroomId',
             type: 'integer',
           },
           {
@@ -34,8 +34,8 @@ export class createAdvices1626452861713 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'AdviceClass',
-            columnNames: ['class_id'],
-            referencedTableName: 'classes',
+            columnNames: ['classroomId'],
+            referencedTableName: 'classrooms',
             referencedColumnNames: ['id'],
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',

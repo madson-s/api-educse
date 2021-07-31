@@ -17,6 +17,6 @@ export default class Work {
   deadline: Date
 
   @ManyToOne(() => Classroom, classroom => classroom.works)
-  @JoinColumn({ name: 'class_id'})
+  @JoinColumn()
   classroom: Classroom
 }

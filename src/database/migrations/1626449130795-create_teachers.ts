@@ -32,7 +32,7 @@ export class createTeachers1626449130795 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'is_verified',
+            name: 'isVerified',
             type: 'boolean',
           },
         ],
