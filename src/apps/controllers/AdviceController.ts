@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
 
 import Advice from '../models/Advice'
+import Classroom from '../models/Classroom'
 
 export default {
   
@@ -22,10 +23,20 @@ export default {
   },
 
   async create(request: Request, response: Response) {
+   
     const { title, description, deadline, classroom } = request.body
-    const adviceRespository = getRepository(Advice)
-    const advice = adviceRespository.create({ title, description, deadline, classroom })
-    await adviceRespository.save(advice)
+    
+    const adviceRepository = getRepository(Advice)
+    const classroomRepository = getRepository(Classroom)
+    
+    const classroomExists = await classroomRepository.findOne({ where: { id: classroom }})
+    
+    if(!classroomExists)
+      return response.status(400).json("classroom do not exists")
+
+    const advice = adviceRepository.create({ title, description, deadline, classroom })
+    
+    await adviceRepository.save(advice)
     return response.json(advice)
   },
 

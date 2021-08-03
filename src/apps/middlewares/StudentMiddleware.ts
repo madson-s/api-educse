@@ -7,6 +7,9 @@ class UpdateStudentParams {
   @IsString()
   @Length(2, 30)
   name: string
+}
+
+class CreateStudentParams extends UpdateStudentParams {
 
   @IsOptional()
   @IsString()
@@ -22,10 +25,6 @@ class UpdateStudentParams {
   @IsString()
   @Length(2, 15)
   username: string
-}
-
-class CreateStudentParams extends UpdateStudentParams {
-
 }
 
 export default {
@@ -56,22 +55,15 @@ export default {
 
   async update(request: Request, response: Response, next: NextFunction) {
   
-    const { name, email, password, username } = request.body
+    const { name } = request.body
     
     const student = new UpdateStudentParams()
     
     student.name = name
-    student.email = email
-    student.password = password
-    student.username = username
   
     try{
       await validateOrReject(student)
-  
-      if(isEmpty(email) && isEmpty(username)) {
-        return response.status(422).json(customError(student))
-      }
-  
+        
       return next()
     }
     catch( err ) {

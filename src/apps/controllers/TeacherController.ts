@@ -35,7 +35,7 @@ export default {
   },
 
   async update(request: Request, response: Response) {
-    const { name, email, password, phone } = request.body
+    const { name, phone } = request.body
     const { id } = request.params
     const teacherRespository = getRepository(Teacher) 
     const teacher = await teacherRespository.findOne({ where: { id }}) 
@@ -43,8 +43,6 @@ export default {
       return response.sendStatus(404)
     }
     teacher.name = name
-    teacher.email = email
-    teacher.password = password
     teacher.phone = phone
     await teacherRespository.save(teacher)
     return response.json(teacher)

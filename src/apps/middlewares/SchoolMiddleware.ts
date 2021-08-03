@@ -12,26 +12,24 @@ class UpdateSchoolParms {
   @Length(2, 30)
   @IsString()
   city: string
+}
 
+class CreateSchoolParms extends UpdateSchoolParms {
+  
   @IsNotEmpty()
   @IsNumber()
   manager: number
 }
 
-class CreateSchoolParms extends UpdateSchoolParms {
-  
-}
-
 export default {
   async update(request: Request, response: Response, next: NextFunction) {
   
-    const { name, city, manager } = request.body
+    const { name, city } = request.body
     
     const school = new UpdateSchoolParms()
     
     school.name = name
     school.city = city
-    school.manager = manager
   
     try{
       await validateOrReject(school)

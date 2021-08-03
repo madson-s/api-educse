@@ -89,10 +89,10 @@ routes.post('/student_message', AuthMiddleware, MessageController.createStudentM
 routes.post('/teacher_message', AuthMiddleware, MessageController.createTeacherMessage)
 
 routes.post('/school_teacher', SchoolTeacherMiddleware.create, SchoolTeacherController.create)
-routes.post('/school_teacher', SchoolTeacherMiddleware.remove, SchoolTeacherController.remove)
+routes.delete('/school_teacher', SchoolTeacherMiddleware.remove, SchoolTeacherController.remove)
 
 routes.post('/classroom_document', ClassroomDocumentMiddleware.create, ClassroomDocumentController.create)
-routes.post('/classroom_document', ClassroomDocumentMiddleware.remove, ClassroomDocumentController.remove)
+routes.delete('/classroom_document', ClassroomDocumentMiddleware.remove, ClassroomDocumentController.remove)
 
 routes.post('/classroom_student', ClassroomStudentMiddleware.create, ClassroomStudentController.create)
 routes.delete('/classroom_student', ClassroomStudentMiddleware.remove, ClassroomStudentController.remove)

@@ -38,7 +38,7 @@ export default {
   },
 
   async update(request: Request, response: Response) {
-    const { name, email, password, username } = request.body
+    const { name } = request.body
     const { id } = request.params
     const studentRespository = getRepository(Student) 
     const student = await studentRespository.findOne({ where: { id }}) 
@@ -46,9 +46,6 @@ export default {
       return response.sendStatus(404)
     }
     student.name = name
-    student.email = email
-    student.password = password
-    student.username = username
     await studentRespository.save(student)
     return response.json(student)
   },

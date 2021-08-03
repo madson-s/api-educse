@@ -36,7 +36,7 @@ export default {
   },
 
   async update(request: Request, response: Response) {
-    const { name, city, manager } = request.body
+    const { name, city } = request.body
     const { id } = request.params
     const schoolRespository = getRepository(School) 
     const school = await schoolRespository.findOne({ where: { id }}) 
@@ -45,7 +45,6 @@ export default {
     }
     school.name = name
     school.city = city
-    school.manager = manager
     await schoolRespository.save(school)
     return response.json(school)
   },

@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
 
 import Work from '../models/Work'
+import Classroom from '../models/Classroom'
 
 export default {
   
@@ -23,7 +24,15 @@ export default {
 
   async create(request: Request, response: Response) {
     const { title, description, deadline, classroom } = request.body
+
     const workRespository = getRepository(Work)
+    const classroomRepository = getRepository(Classroom)
+    
+    const classroomExists = await classroomRepository.findOne({ where: { id: classroom }})
+    
+    if(!classroomExists)
+      return response.status(400).json("classroom do not exists")
+
     const work = workRespository.create({ title, description, deadline, classroom })
     await workRespository.save(work)
     return response.json(work)

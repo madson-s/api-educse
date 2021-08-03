@@ -17,7 +17,7 @@ export default {
     }
     teacher.schools.push(school)
     await teacherRespository.save(teacher)
-    return response.json(school)
+    return response.status(204)
   },
 
   async remove(request: Request, response: Response) {
@@ -31,6 +31,6 @@ export default {
     }
     teacher.schools.filter(school => school.id != schoolId)
     await teacherRespository.save(teacher)
-    return response.json(school)
+    return response.status(204)
   }
 }

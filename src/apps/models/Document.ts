@@ -18,7 +18,7 @@ export default class Document {
 
   @ManyToMany(() => Classroom, classroom => classroom.documents)
   @JoinTable({
-    name: 'documents_classes',
+    name: 'documents_classrooms',
     joinColumn: {
       name: 'documentId',
       referencedColumnName: 'id'
