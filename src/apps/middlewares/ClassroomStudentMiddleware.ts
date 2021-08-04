@@ -3,8 +3,8 @@ import { validateOrReject, IsNotEmpty, IsNumber } from 'class-validator'
 
 class RemoveClassroomStudentParms {
  
-  @IsNotEmpty()
-  @IsNumber()
+  // @IsNotEmpty()
+  // @IsNumber()
   studentId: number
 
   @IsNotEmpty()

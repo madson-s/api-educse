@@ -5,6 +5,7 @@ import Message from '../models/Message'
 import Student from '../models/Student'
 import Teacher from '../models/Teacher'
 import Classroom from '../models/Classroom'
+import Chat from '../models/Chat'
 
 export default {
   async createStudentMessage(request: Request, response: Response) {
@@ -15,18 +16,26 @@ export default {
     const messageRepository = getRepository(Message)
     const studentRepository = getRepository(Student)
     const classroomRepository = getRepository(Classroom)
+    const chatRespository = getRepository(Chat)
 
     try {
-      const studentExist = await studentRepository.findOne({ where: { id: student }})
-      const classroomExist = await classroomRepository.findOne({ where: { id: classroom }})
+      const studentExists = await studentRepository.findOne({ where: { id: student }})
+      const classroomExists = await classroomRepository.findOne({ where: { id: classroom }})
+      const chatExists = await chatRespository.findOne({ where: { id: chat }})
   
-      if(!studentExist || !classroomExist)
-        return response.status(400)
+      if(!studentExists)
+        return response.status(400).json("Teacher inexistente")
+
+      if(!classroomExists)
+        return response.status(400).json("Classroom inexistente")
+  
+      if(!chatExists)
+        return response.status(400).json("Chat inexistente")
   
       const message = messageRepository.create({ text, sentAt, createdAt, classroom, student, chat })
       await messageRepository.save(message)
-      message.student = studentExist
-      
+      message.student = studentExists
+
       const socket = request.io?.sockets.connected[socketId]
       if(socket)
         socket.to(classroom).emit('message', message)
@@ -35,7 +44,7 @@ export default {
     }
     catch( err ) {
       console.log(err)
-      response.status(500)
+      response.status(500).json(err)
     }
   },
 
@@ -47,17 +56,25 @@ export default {
     const messageRepository = getRepository(Message)
     const teacherRepository = getRepository(Teacher)
     const classroomRepository = getRepository(Classroom)
+    const chatRespository = getRepository(Chat)
 
     try {
-      const teacherExist = await teacherRepository.findOne({ where: { id: teacher }})
-      const classroomExist = await classroomRepository.findOne({ where: { id: classroom }})
+      const teacherExists = await teacherRepository.findOne({ where: { id: teacher }})
+      const classroomExists = await classroomRepository.findOne({ where: { id: classroom }})
+      const chatExists = await chatRespository.findOne({ where: { id: chat }})
   
-      if(!teacherExist || !classroomExist)
-        return response.status(400)
+      if(!teacherExists)
+        return response.status(400).json("Teacher inexistente")
+
+      if(!classroomExists)
+        return response.status(400).json("Classroom inexistente")
   
+      if(!chatExists)
+        return response.status(400).json("Chat inexistente")
+
       const message = messageRepository.create({ text, sentAt, createdAt, classroom, teacher, chat })
       await messageRepository.save(message)
-      message.teacher = teacherExist
+      message.teacher = teacherExists
 
       const socket = request.io?.sockets.connected[socketId]
 

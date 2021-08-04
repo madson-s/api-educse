@@ -3,9 +3,9 @@ import { validateOrReject, isEmpty, Length, IsNotEmpty, IsString,IsOptional } fr
 
 class UpdateStudentParams {
 
-  @IsNotEmpty()
-  @IsString()
-  @Length(2, 30)
+  // @IsNotEmpty()
+  // @IsString()
+  // @Length(2, 30)
   name: string
 }
 
@@ -63,7 +63,7 @@ export default {
   
     try{
       await validateOrReject(student)
-        
+
       return next()
     }
     catch( err ) {

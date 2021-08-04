@@ -7,13 +7,20 @@ import Student from '../models/Student'
 export default {
 
   async create(request: Request, response: Response) {
-    const { studentId, classroomId } = request.body
+    const { studentId, classroomId, studentUsername, studentEmail } = request.body
     
     const classroomRespository = getRepository(Classroom)
     const studentRespository = getRepository(Student)
     
     const classroom = await classroomRespository.findOne({ where: { id: classroomId }})
-    const student = await studentRespository.findOne({ where: { id: studentId }, relations: ['classrooms']})
+    const student = await studentRespository.findOne({ 
+      where: [
+        { id: studentId },
+        { username: studentUsername },
+        { email: studentEmail },
+      ], 
+      relations: ['classrooms']
+    })
     
     if(!student || !classroom) {
       return response.sendStatus(400)

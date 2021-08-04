@@ -31,8 +31,8 @@ export default {
     if(studentExists) {
       return response.sendStatus(409)
     }
-
-    const student = studentRespository.create({ name, email, username, password, is_verified })
+    const studentName = name ? name : "Estudante "+ new Date().getTime();
+    const student = studentRespository.create({ name: studentName, email, username, password, is_verified })
     await studentRespository.save(student)
     return response.json(student)
   },

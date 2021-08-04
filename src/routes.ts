@@ -14,6 +14,7 @@ import WorkMiddleware from './apps/middlewares/WorkMiddleware'
 import StudentMiddleware from './apps/middlewares/StudentMiddleware'
 import AdviceMiddleware from './apps/middlewares/AdviceMiddleware'
 import AuthenticationMiddleware from './apps/middlewares/AuthenticationMiddleware'
+import MessageMiddleware from './apps/middlewares/MessageMiddleware'
 
 import MessageController from './apps/controllers/MessageController'
 import AuthController from './apps/controllers/AuthController'
@@ -85,8 +86,8 @@ routes.post('/student', StudentMiddleware.create, StudentController.create)
 routes.put('/student/:id', AuthMiddleware, StudentMiddleware.update, AdviceController.update)
 routes.delete('/student/:id', AuthMiddleware, StudentController.remove)
 
-routes.post('/student_message', AuthMiddleware, MessageController.createStudentMessage)
-routes.post('/teacher_message', AuthMiddleware, MessageController.createTeacherMessage)
+routes.post('/student_message', AuthMiddleware, MessageMiddleware.studentMessage, MessageController.createStudentMessage)
+routes.post('/teacher_message', AuthMiddleware, MessageMiddleware.teacherMessage, MessageController.createTeacherMessage)
 
 routes.post('/school_teacher', SchoolTeacherMiddleware.create, SchoolTeacherController.create)
 routes.delete('/school_teacher', SchoolTeacherMiddleware.remove, SchoolTeacherController.remove)
