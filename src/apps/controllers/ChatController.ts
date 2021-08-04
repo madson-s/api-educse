@@ -15,7 +15,7 @@ export default {
   async find(request: Request, response: Response) {
     const { id } = request.params
     const chatRespository = getRepository(Classroom) 
-    const chat = await chatRespository.findOne({ where: { id }, relations: ['messages']}) 
+    const chat = await chatRespository.findOne({ where: { id }, relations: ['messages', 'messages.student', 'messages.teacher']}) 
     if(!chat) {
       return response.sendStatus(404)
     }
