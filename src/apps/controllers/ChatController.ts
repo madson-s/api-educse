@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
 
 import Chat from '../models/Chat'
+import Classroom from '../models/Classroom'
 
 export default {
   
@@ -13,7 +14,7 @@ export default {
  
   async find(request: Request, response: Response) {
     const { id } = request.params
-    const chatRespository = getRepository(Chat) 
+    const chatRespository = getRepository(Classroom) 
     const chat = await chatRespository.findOne({ where: { id }, relations: ['messages']}) 
     if(!chat) {
       return response.sendStatus(404)

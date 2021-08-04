@@ -14,7 +14,7 @@ import WorkMiddleware from './apps/middlewares/WorkMiddleware'
 import StudentMiddleware from './apps/middlewares/StudentMiddleware'
 import AdviceMiddleware from './apps/middlewares/AdviceMiddleware'
 import AuthenticationMiddleware from './apps/middlewares/AuthenticationMiddleware'
-import MessageMiddleware from './apps/middlewares/MessageMiddleware'
+ import MessageMiddleware from './apps/middlewares/MessageMiddleware'
 
 import MessageController from './apps/controllers/MessageController'
 import AuthController from './apps/controllers/AuthController'
