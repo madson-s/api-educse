@@ -14,7 +14,6 @@ class MessageParms {
 
   @IsNotEmpty()
   @IsNumber()
-
   classroom: number
 
   @IsNotEmpty()
