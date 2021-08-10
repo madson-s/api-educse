@@ -35,7 +35,7 @@ export default {
     const classroomRespository = getRepository(Classroom)
     const teacherRespository = getRepository(Teacher)
     const schoolRespository = getRepository(School)
-    
+
     const schoolExists = await schoolRespository.findOne({ where: { id: school }})
     const teacherExists = await teacherRespository.findOne({ where: { id: teacher }})
 
@@ -48,9 +48,9 @@ export default {
     }
 
     const classroom = classroomRespository.create({ name, teacher, school })
-
+     
     await classroomRespository.save(classroom)
-
+    
     return response.json(classroom)
   },
 

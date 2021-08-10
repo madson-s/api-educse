@@ -25,6 +25,10 @@ export default {
 
     const chat = await chatRespository.findOne({ where: { id }}) 
     
+    if(!chat) {
+      return response.sendStatus(404)
+    }
+
     const messages = await messageRepository.find({ 
       relations: ['student', 'teacher'],
       where: { classroom: id }, 
@@ -35,31 +39,8 @@ export default {
       }
     })
 
-    if(!chat) {
-      return response.sendStatus(404)
-    }
-
     chat.messages = messages
 
     return response.json(chat)
-  },
-
-  async store(request: Request, response: Response) {
-    const { classroom } = request.body
-    const chatRespository = getRepository(Chat)
-    const chat = chatRespository.create({ classroom })
-    await chatRespository.save(chat)
-    return response.json(chat)
-  },
-
-  async remove(request: Request, response: Response) {
-    const { id } = request.params 
-    const chatRespository = getRepository(Chat) 
-    const chat = await chatRespository.findOne({ where: { id }})  
-    if(!chat) {
-      return response.sendStatus(404)
-    }
-    await chatRespository.remove(chat)
-    return response.sendStatus(200)
   },
 }

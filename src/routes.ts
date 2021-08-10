@@ -77,8 +77,6 @@ routes.delete('/advice/:id', AuthMiddleware, AdviceController.remove)
 
 routes.get('/chat', AuthMiddleware, ChatController.index)
 routes.get('/chat/:id', AuthMiddleware, ChatController.find)
-routes.post('/chat', AuthMiddleware, ChatController.store)
-routes.delete('/chat/:id', AuthMiddleware, ChatController.remove)
 
 routes.get('/student', AuthMiddleware, StudentController.index)
 routes.get('/student/:id', AuthMiddleware, StudentController.find)
