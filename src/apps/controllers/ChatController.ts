@@ -3,6 +3,7 @@ import { getRepository } from 'typeorm'
 
 import Chat from '../models/Chat'
 import Classroom from '../models/Classroom'
+import Message from '../models/Message'
 
 export default {
   
@@ -13,12 +14,33 @@ export default {
   },
  
   async find(request: Request, response: Response) {
+    
     const { id } = request.params
+    const { page, offset } = request.body
+    const messagesPerPage = 30
+    const skip = ((page - 1) * messagesPerPage) + offset 
+
     const chatRespository = getRepository(Classroom) 
-    const chat = await chatRespository.findOne({ where: { id }, relations: ['messages', 'messages.student', 'messages.teacher']}) 
+    const messageRepository = getRepository(Message)
+
+    const chat = await chatRespository.findOne({ where: { id }}) 
+    
+    const messages = await messageRepository.find({ 
+      relations: ['student', 'teacher'],
+      where: { classroom: id }, 
+      skip: skip, 
+      take: messagesPerPage,
+      order: {
+        id: 'DESC',
+      }
+    })
+
     if(!chat) {
       return response.sendStatus(404)
     }
+
+    chat.messages = messages
+
     return response.json(chat)
   },
 
