@@ -99,5 +99,7 @@ routes.delete('/classroom_student', ClassroomStudentMiddleware.remove, Classroom
 routes.post('/manager_authenticate', AuthenticationMiddleware.manager, AuthController.managerAuthenticate)
 routes.post('/teacher_authenticate', AuthenticationMiddleware.teacher,  AuthController.teacherAuthenticate)
 routes.post('/student_authenticate', AuthenticationMiddleware.student, AuthController.studentAuthenticate)
+routes.get('/teacher_revalidate',  AuthController.teacherRevalidate)
+routes.get('/student_revalidate', AuthController.studentRevalidate)
 
 export default routes

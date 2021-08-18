@@ -7,6 +7,12 @@ import Teacher from '../models/Teacher'
 import Student from '../models/Student'
 import Managar from '../models/Manager'
 
+interface TokePayload {
+  id: string;
+  iat: number;
+  exp: number;
+}
+
 export default {
   async teacherAuthenticate(request: Request, response: Response) {
     
@@ -30,6 +36,37 @@ export default {
     return response.json({ teacher, token, })
   },
 
+  async teacherRevalidate(request: Request, response: Response) {
+    
+    const { authorization } = request.headers
+ 
+    if(!authorization) {
+      return response.sendStatus(401)
+    }
+
+    const token = authorization.replace('Bearer', '').trim()
+
+    try {
+      const data  = jwt.verify(token, 'secret')
+      
+      const { id } = data as TokePayload
+      
+      request.userId = id 
+     
+      const teacherRespository = getRepository(Teacher)
+      const teacher = await teacherRespository.findOne({ where: { id }}) 
+      
+      if(!teacher) {
+        return response.sendStatus(401)
+      }
+
+      return response.json({ teacher, token, })
+    } 
+    catch {
+      return response.sendStatus(401)
+    }
+  },
+
   async studentAuthenticate(request: Request, response: Response) {
     
     const { password, email, username } = request.body
@@ -51,6 +88,37 @@ export default {
     const token = jwt.sign({id: student.id}, 'secret') 
 
     return response.json({ student, token, })
+  },
+
+  async studentRevalidate(request: Request, response: Response) {
+    
+    const { authorization } = request.headers
+ 
+    if(!authorization) {
+      return response.sendStatus(401)
+    }
+
+    const token = authorization.replace('Bearer', '').trim()
+
+    try {
+      const data  = jwt.verify(token, 'secret')
+      
+      const { id } = data as TokePayload
+      
+      request.userId = id 
+     
+      const studentRespository = getRepository(Student)
+      const student = await studentRespository.findOne({ where: { id }}) 
+      
+      if(!student) {  
+        return response.sendStatus(401)
+      }
+
+      return response.json({ student, token, })
+    } 
+    catch {
+      return response.sendStatus(401)
+    }
   },
 
   async managerAuthenticate(request: Request, response: Response) {
