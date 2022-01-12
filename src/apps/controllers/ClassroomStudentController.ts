@@ -21,7 +21,7 @@ export default {
       return response.sendStatus(404)
     }
     const token = jwt.sign({id: classroom.id}, 'secret') 
-    return response.json({ token })
+    return response.json(token)
   },
 
   async create(request: Request, response: Response) {
