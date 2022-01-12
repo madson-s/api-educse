@@ -7,8 +7,8 @@ class RemoveClassroomStudentParms {
   // @IsNumber()
   studentId: number
 
-  @IsNotEmpty()
-  @IsNumber()
+  //@IsNotEmpty()
+  //@IsNumber()
   classroomId: number
 }
 

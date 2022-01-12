@@ -30,6 +30,7 @@ import WorkController from './apps/controllers/WorkController'
 import AdviceController from './apps/controllers/AdviceController'
 import ChatController from './apps/controllers/ChatController'
 import StudentController from './apps/controllers/StudentController'
+import ClassroomTokenController from './apps/controllers/ClassroomTokenController'
 
 const routes = Router()
 
@@ -87,12 +88,14 @@ routes.delete('/student/:id', AuthMiddleware, StudentController.remove)
 routes.post('/student_message', AuthMiddleware, MessageMiddleware.studentMessage, MessageController.createStudentMessage)
 routes.post('/teacher_message', AuthMiddleware, MessageMiddleware.teacherMessage, MessageController.createTeacherMessage)
 
+
 routes.post('/school_teacher', SchoolTeacherMiddleware.create, SchoolTeacherController.create)
 routes.delete('/school_teacher', SchoolTeacherMiddleware.remove, SchoolTeacherController.remove)
 
 routes.post('/classroom_document', ClassroomDocumentMiddleware.create, ClassroomDocumentController.create)
 routes.delete('/classroom_document', ClassroomDocumentMiddleware.remove, ClassroomDocumentController.remove)
 
+routes.get('/generate_classroom_token/:id', ClassroomStudentController.generate)
 routes.post('/classroom_student', ClassroomStudentMiddleware.create, ClassroomStudentController.create)
 routes.delete('/classroom_student', ClassroomStudentMiddleware.remove, ClassroomStudentController.remove)
 
