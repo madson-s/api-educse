@@ -34,9 +34,6 @@ export default {
       where: { classroom: id }, 
       skip: skip, 
       take: messagesPerPage,
-      order: {
-        id: 'DESC',
-      }
     })
 
     chat.messages = messages
