@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../src/database/database.sqlite"
+}
+
+model advices {
+  id          Int        @id @default(autoincrement())
+  classroomId Int
+  title       String
+  description String
+  deadline    DateTime
+  classrooms  classrooms @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+}
+
+model chats {
+  id          Int        @id @default(autoincrement())
+  classroomId Int
+  classrooms  classrooms @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  messages    messages[]
+}
+
+model classrooms {
+  id                             Int                              @id @default(autoincrement())
+  name                           String
+  teacherId                      Int
+  schoolId                       Int
+  schools                        schools                          @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  teachers                       teachers                         @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  advices                        advices[]
+  chats                          chats[]
+  documents_classrooms           documents_classrooms[]
+  messages                       messages[]
+  students_classrooms_classrooms students_classrooms_classrooms[]
+  works                          works[]
+}
+
+model documents {
+  id                   Int                    @id @default(autoincrement())
+  teacherId            Int
+  title                String
+  teachers             teachers               @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  documents_classrooms documents_classrooms[]
+}
+
+model documents_classrooms {
+  documentId  Int
+  classroomId Int
+  classrooms  classrooms @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  documents   documents  @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@id([documentId, classroomId])
+}
+
+model managers {
+  id       Int       @id @default(autoincrement())
+  name     String
+  phone    String
+  email    String
+  password String
+  schools  schools[]
+}
+
+model messages {
+  id          Int        @id @default(autoincrement())
+  text        String
+  createdAt   DateTime
+  sentAt      DateTime
+  classroomId Int
+  chatId      Int
+  teacherId   Int?
+  studentId   Int?
+  chats       chats      @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  classrooms  classrooms @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  students    students?  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teachers    teachers?  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+}
+
+model migrations {
+  id        Int    @id @default(autoincrement())
+  timestamp BigInt
+  name      String
+}
+
+model schools {
+  id               Int                @id @default(autoincrement())
+  managerId        Int
+  name             String
+  city             String
+  managers         managers           @relation(fields: [managerId], references: [id], onDelete: Cascade)
+  classrooms       classrooms[]
+  teachers_schools teachers_schools[]
+}
+
+model students {
+  id                             Int                              @id @default(autoincrement())
+  name                           String
+  username                       String?                          @unique(map: "sqlite_autoindex_students_1")
+  email                          String?                          @unique(map: "sqlite_autoindex_students_2")
+  password                       String
+  is_verified                    Boolean
+  messages                       messages[]
+  students_classrooms_classrooms students_classrooms_classrooms[]
+}
+
+model students_classrooms_classrooms {
+  studentsId   Int
+  classroomsId Int
+  classrooms   classrooms @relation(fields: [classroomsId], references: [id], onDelete: Cascade)
+  students     students   @relation(fields: [studentsId], references: [id], onDelete: Cascade)
+
+  @@id([studentsId, classroomsId])
+}
+
+model teachers {
+  id               Int                @id @default(autoincrement())
+  name             String
+  email            String             @unique(map: "sqlite_autoindex_teachers_1")
+  password         String
+  phone            String
+  isVerified       Boolean
+  classrooms       classrooms[]
+  documents        documents[]
+  messages         messages[]
+  teachers_schools teachers_schools[]
+}
+
+model teachers_schools {
+  teacherId Int
+  schoolId  Int
+  schools   schools  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  teachers  teachers @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@id([teacherId, schoolId])
+}
+
+model works {
+  id          Int        @id @default(autoincrement())
+  classroomId Int
+  title       String
+  description String
+  deadline    DateTime
+  classrooms  classrooms @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+}
