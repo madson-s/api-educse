@@ -1,6 +1,6 @@
 import { Router} from 'express'
 
-import AuthMiddleware from './apps/middlewares/AuthMiddleware'
+import AuthMiddleware from './apps/middlewares/authMiddleware'
 
 import ManagerMiddleware from './apps/middlewares/ManagerMiddleware'
 import SchoolMiddleware  from './apps/middlewares/SchoolMiddleware'
@@ -14,7 +14,8 @@ import WorkMiddleware from './apps/middlewares/WorkMiddleware'
 import StudentMiddleware from './apps/middlewares/StudentMiddleware'
 import AdviceMiddleware from './apps/middlewares/AdviceMiddleware'
 import AuthenticationMiddleware from './apps/middlewares/AuthenticationMiddleware'
- import MessageMiddleware from './apps/middlewares/MessageMiddleware'
+import MessageMiddleware from './apps/middlewares/MessageMiddleware'
+import InvitationMiddleware from './apps/middlewares/InvitationMiddleware'
 
 import MessageController from './apps/controllers/MessageController'
 import AuthController from './apps/controllers/AuthController'
@@ -30,7 +31,9 @@ import WorkController from './apps/controllers/WorkController'
 import AdviceController from './apps/controllers/AdviceController'
 import ChatController from './apps/controllers/ChatController'
 import StudentController from './apps/controllers/StudentController'
-import ClassroomTokenController from './apps/controllers/ClassroomTokenController'
+// import ClassroomTokenController from './apps/controllers/ClassroomTokenController'
+import InvitationController from './apps/controllers/InvitationController'
+
 
 const routes = Router()
 
@@ -88,6 +91,10 @@ routes.delete('/student/:id', AuthMiddleware, StudentController.remove)
 routes.post('/student_message', AuthMiddleware, MessageMiddleware.studentMessage, MessageController.createStudentMessage)
 routes.post('/teacher_message', AuthMiddleware, MessageMiddleware.teacherMessage, MessageController.createTeacherMessage)
 
+routes.get('/student/invitation/:id', StudentController.getInvitations)
+routes.post('/invitation', InvitationMiddleware.create, InvitationController.create)
+routes.post('/invitation/accept/:id', InvitationController.accept)
+routes.delete('/invitation/:id', InvitationController.remove)
 
 routes.post('/school_teacher', SchoolTeacherMiddleware.create, SchoolTeacherController.create)
 routes.delete('/school_teacher', SchoolTeacherMiddleware.remove, SchoolTeacherController.remove)
