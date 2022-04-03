@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
+import { PrismaClient } from '@prisma/client'
 
 import Student from '../models/Student'
 
@@ -60,4 +61,23 @@ export default {
     await studentRespository.remove(student)
     return response.sendStatus(200)
   },
+
+  async getInvitations (request: Request, response: Response) {
+    try {
+      const  id = Number(request.params.id) 
+      const prisma = new PrismaClient()
+      const student = await prisma.students.findUnique({ where: { id }, include: {
+        invitations: true,
+      }})
+
+      if(!student)
+        return response.status(400).send('student not found')
+      
+      const { invitations } = student
+      return response.send(invitations)
+
+    } catch (error) {
+      response.status(500).send('internal server error')
+    }
+  }
 }
