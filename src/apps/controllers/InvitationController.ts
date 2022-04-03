@@ -53,12 +53,9 @@ export default {
         }
       })
 
-      const invitationUpdate = prisma.invitations.update({ 
-        where: { id }, 
-        data: { accepted: true, answered: true},
-      })
+      const invitationDelete = prisma.invitations.delete({ where: { id }})
 
-      await prisma.$transaction([ studentClassroomCreate, invitationUpdate ])
+      await prisma.$transaction([ studentClassroomCreate, invitationDelete ])
 
       return response.sendStatus(200)
 
