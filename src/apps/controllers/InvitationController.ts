@@ -33,6 +33,41 @@ export default {
     }
   },
 
+  async accept (request: Request, response: Response) {
+
+    try {
+      
+      const id = Number(request.params.id)
+
+      const prisma = new PrismaClient()
+
+      const invitationExists = await prisma.invitations.findUnique({ where: { id } })
+      
+      if(!invitationExists) 
+        return response.status(400).send('invitation not found')
+
+      const studentClassroomCreate = prisma.students_classrooms_classrooms.create({ 
+        data: { 
+          studentsId: invitationExists.studentId, 
+          classroomsId: invitationExists.classroomId,
+        }
+      })
+
+      const invitationUpdate = prisma.invitations.update({ 
+        where: { id }, 
+        data: { accepted: true, answered: true},
+      })
+
+      await prisma.$transaction([ studentClassroomCreate, invitationUpdate ])
+
+      return response.sendStatus(200)
+
+    } catch (error) {
+
+      response.status(500).send('internal server error')
+    }
+  },
+
   async remove (request: Request, response: Response) {
 
     try {
