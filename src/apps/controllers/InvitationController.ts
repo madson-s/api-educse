@@ -4,11 +4,13 @@ import { PrismaClient } from "@prisma/client";
 export default {
   async create (request: Request, response: Response) {
     try {
-      const { stundent, teacher, classroom } = request.body
+      const { student, teacher, classroom } = request.body
 
       const prisma = new PrismaClient()
       
-      const studentExists = await prisma.students.findUnique({ where: { id: stundent }})
+      const studentExists = await prisma.students.findFirst({ 
+        where: { OR: [ { email: student }, { username: student } ]}
+      })
       if(!studentExists) return response.status(400).send('student not found')
 
       const teacherExists = await prisma.teachers.findUnique({ where: { id: teacher }})
@@ -18,7 +20,7 @@ export default {
       if(!classroomExists) return response.status(400).send('classroom not found')
       
       const invitation = await prisma.invitations.create({ data: {
-        studentId: stundent,
+        studentId: studentExists.id,
         teacherId: teacher,
         classroomId: classroom,
         answered: false,
@@ -26,10 +28,31 @@ export default {
       }})
 
       return response.status(201).send(invitation)
-    } catch {
+    } catch (error){
       response.status(500).send('internal server error')
     }
   },
 
-  
+  async remove (request: Request, response: Response) {
+
+    try {
+
+      const id = Number(request.params.id)
+
+      const prisma = new PrismaClient()
+      
+      const invitation = await prisma.invitations.findUnique({ where: { id } })
+      
+      if(!invitation) 
+        return response.status(400).send('invitation not found')
+      
+      await prisma.invitations.delete({ where: { id }})
+
+      return response.sendStatus(200)
+
+    } catch (error) {
+
+      response.status(500).send('internal server error')
+    }
+  }
 }
