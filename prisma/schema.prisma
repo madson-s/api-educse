@@ -36,6 +36,7 @@ model classrooms {
   messages                       messages[]
   students_classrooms_classrooms students_classrooms_classrooms[]
   works                          works[]
+  invitations                    invitations[]
 }
 
 model documents {
@@ -53,6 +54,18 @@ model documents_classrooms {
   documents   documents  @relation(fields: [documentId], references: [id], onDelete: Cascade)
 
   @@id([documentId, classroomId])
+}
+
+model invitations {
+  id          Int        @id @default(autoincrement())
+  studentId   Int
+  teacherId   Int
+  classroomId Int
+  accepted    Boolean
+  answered    Boolean
+  student     students   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacher     teachers   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  classroom   classrooms @relation(fields: [classroomId], references: [id], onDelete: Cascade)
 }
 
 model managers {
@@ -104,6 +117,7 @@ model students {
   is_verified                    Boolean
   messages                       messages[]
   students_classrooms_classrooms students_classrooms_classrooms[]
+  invitations                    invitations[]
 }
 
 model students_classrooms_classrooms {
@@ -126,6 +140,7 @@ model teachers {
   documents        documents[]
   messages         messages[]
   teachers_schools teachers_schools[]
+  invitations      invitations[]
 }
 
 model teachers_schools {
