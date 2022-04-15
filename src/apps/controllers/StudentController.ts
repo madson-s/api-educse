@@ -67,7 +67,21 @@ export default {
       const  id = Number(request.params.id) 
       const prisma = new PrismaClient()
       const student = await prisma.students.findUnique({ where: { id }, include: {
-        invitations: true,
+        invitations: {
+          select: {
+            id: true,
+            teacher: {
+              select: {
+                name: true,
+              }
+            },
+            classroom: {
+              select: {
+                name: true,
+              }
+            },
+          }
+        }
       }})
 
       if(!student)
