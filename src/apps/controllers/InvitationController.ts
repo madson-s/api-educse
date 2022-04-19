@@ -17,11 +17,19 @@ export default {
       if(!teacherExists) return response.status(400).send('teacher not found')
 
       const classroomExists = await prisma.classrooms.findUnique({ where: { id: classroom }})
+
       if(!classroomExists) return response.status(400).send('classroom not found')
 
       const invitationExists = await prisma.invitations.findFirst({ where: { studentId: studentExists.id, classroomId: classroom }})
 
       if(invitationExists) return response.status(400).send('Esse aluno já foi convidado para a turma')
+
+      const classroomStudentExists = await prisma.students_classrooms_classrooms.findFirst({ where: {
+        studentsId: studentExists.id,
+        classroomsId: classroom,
+      }})
+
+      if(classroomStudentExists) return response.status(400).send('Esse aluno já pertence a turma')
       
       const invitation = await prisma.invitations.create({ data: {
         studentId: studentExists.id,
