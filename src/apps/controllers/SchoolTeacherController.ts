@@ -13,11 +13,11 @@ export default {
     const school = await schoolRespository.findOne({ where: { id: schoolId }}) 
     const teacher = await teacherRespository.findOne({ where: { id: teacherId }, relations: ['schools']}) 
     if(!teacher || !school) {
-      return response.status(400)
+      return response.sendStatus(400)
     }
     teacher.schools.push(school)
     await teacherRespository.save(teacher)
-    return response.status(204)
+    return response.sendStatus(204)
   },
 
   async remove(request: Request, response: Response) {
@@ -27,10 +27,10 @@ export default {
     const school = await schoolRespository.findOne({ where: { id: schoolId }}) 
     const teacher = await teacherRespository.findOne({ where: { id: teacherId }, relations: ['schools']}) 
     if(!teacher || !school) {
-      return response.status(400)
+      return response.sendStatus(400)
     }
     teacher.schools.filter(school => school.id != schoolId)
     await teacherRespository.save(teacher)
-    return response.status(204)
+    return response.sendStatus(200)
   }
 }
