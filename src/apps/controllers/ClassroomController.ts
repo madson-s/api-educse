@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
+import Chat from '../models/Chat'
 
 import Classroom from '../models/Classroom'
 import School from '../models/School'
@@ -19,7 +20,7 @@ export default {
 
     const classroom = await classroomRespository.findOne({ 
       where: { id }, 
-      relations: ['school', 'teacher', 'students','documents', 'works', 'advices']
+      relations: ['school', 'teacher', 'students','documents', 'works', 'advices', 'chat']
     }) 
 
     if(!classroom) {
@@ -32,26 +33,35 @@ export default {
     
     const { name, teacher, school } = request.body
     
-    const classroomRespository = getRepository(Classroom)
-    const teacherRespository = getRepository(Teacher)
-    const schoolRespository = getRepository(School)
+    try {
+      const classroomRespository = getRepository(Classroom)
+      const teacherRespository = getRepository(Teacher)
+      const schoolRespository = getRepository(School)
+      const chatRepository = getRepository(Chat)
 
-    const schoolExists = await schoolRespository.findOne({ where: { id: school }})
-    const teacherExists = await teacherRespository.findOne({ where: { id: teacher }})
+      const schoolExists = await schoolRespository.findOne({ where: { id: school }})
+      const teacherExists = await teacherRespository.findOne({ where: { id: teacher }})
 
-    if(!schoolExists) {
-      return response.status(400).json("school do not exists")
+      if(!schoolExists) {
+        return response.status(400).json("school do not exists")
+      }
+
+      if(!teacherExists) {
+        return response.status(400).json("teacher do not exists")
+      }
+
+      const classroom = classroomRespository.create({ name, teacher, school })
+      
+      await classroomRespository.save(classroom)
+
+      const chat = chatRepository.create({ classroom: classroom })
+      
+      await chatRepository.save(chat)
+      
+      return response.json(classroom)
+    } catch (error) {
+      return response.sendStatus(500)
     }
-
-    if(!teacherExists) {
-      return response.status(400).json("teacher do not exists")
-    }
-
-    const classroom = classroomRespository.create({ name, teacher, school })
-     
-    await classroomRespository.save(classroom)
-    
-    return response.json(classroom)
   },
 
   async update(request: Request, response: Response) {
