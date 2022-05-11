@@ -118,6 +118,7 @@ model students {
   messages                       messages[]
   students_classrooms_classrooms students_classrooms_classrooms[]
   invitations                    invitations[]
+  grades                         workGrades[]
 }
 
 model students_classrooms_classrooms {
@@ -153,10 +154,20 @@ model teachers_schools {
 }
 
 model works {
-  id          Int        @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   classroomId Int
   title       String
   description String
   deadline    DateTime
-  classrooms  classrooms @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  classrooms  classrooms   @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  grades      workGrades[]
+}
+
+model workGrades {
+  id        Int      @id @default(autoincrement())
+  workId    Int
+  studentId Int
+  grade     Float
+  student   students @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  work      works    @relation(fields: [workId], references: [id], onDelete: Cascade)
 }

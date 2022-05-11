@@ -33,6 +33,7 @@ import ChatController from './apps/controllers/ChatController'
 import StudentController from './apps/controllers/StudentController'
 // import ClassroomTokenController from './apps/controllers/ClassroomTokenController'
 import InvitationController from './apps/controllers/InvitationController'
+import WorkGradeController from './apps/controllers/WorkGradeController'
 
 
 const routes = Router()
@@ -111,5 +112,8 @@ routes.post('/teacher_authenticate', AuthenticationMiddleware.teacher,  AuthCont
 routes.post('/student_authenticate', AuthenticationMiddleware.student, AuthController.studentAuthenticate)
 routes.get('/teacher_revalidate',  AuthController.teacherRevalidate)
 routes.get('/student_revalidate', AuthController.studentRevalidate)
+
+routes.get('/work/:id/grade/template', WorkGradeController.getworkGradeTemplate)
+routes.post('/work/:id/grade', WorkGradeController.create)
 
 export default routes
