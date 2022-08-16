@@ -117,6 +117,7 @@ routes.get('/student_revalidate', AuthController.studentRevalidate)
 routes.get('/work/:id/grade/template', WorkGradeController.getworkGradeTemplate)
 routes.post('/work/:id/grade', WorkGradeController.create)
 
+routes.get('/classroom/:idClassroom/ban/', BanishimentController.findClassroomBanishments)
 routes.post('/classroom/:idClassroom/ban/student/:idStudent', BanishimentController.create)
 routes.delete('/classroom/:idClassroom/ban/student/:idStudent', BanishimentController.remove)
 

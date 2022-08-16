@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 
 import Classroom from '../models/Classroom'
 import Student from '../models/Student'
+import { PrismaClient } from '@prisma/client'
 
 interface TokePayload {
   id: string;
@@ -37,6 +38,9 @@ export default {
       classroomId = id
     }
 
+    const prisma = new PrismaClient()
+
+    
     const classroom = await classroomRespository.findOne({ where: { id: classroomId }})
     const student = await studentRespository.findOne({ 
       where: [
@@ -50,6 +54,10 @@ export default {
     if(!student || !classroom) {
       return response.sendStatus(400)
     }
+
+    const bannedStudent = await prisma.bannedStudents.findFirst({ where: { studentId: student.id, classroomId: classroom.id  }})
+
+    if(bannedStudent) return response.sendStatus(400)
     
     student.classrooms.push(classroom)
     

@@ -2,6 +2,41 @@ import { Request, Response } from 'express'
 import { PrismaClient } from "@prisma/client";
 
 export default {
+  async findClassroomBanishments(request: Request, response: Response) {
+    try {
+      const idClassroom = Number(request.params.idClassroom)
+      
+      const prisma = new PrismaClient()
+
+      const classroom = await prisma.classrooms.findFirst({ 
+        where: { id: idClassroom },
+        include: {
+          bannedStudents: {
+            include: {
+              student: {
+                select: {
+                  id: true,
+                  name: true,
+                }
+              }
+            }
+          },
+        }
+      })
+
+      if(!classroom) return response.status(400).send('classroom not found')
+
+      const students = classroom.bannedStudents.map(bannedStudent => ({
+        id: bannedStudent.student.id,
+        name: bannedStudent.student.name,
+      }))
+
+      return response.json(students)
+    } catch (error) {
+      return response.sendStatus(500)
+    }
+  },
+
   async create(request: Request, response: Response) {
     try {
       const idClassroom = Number(request.params.idClassroom)
