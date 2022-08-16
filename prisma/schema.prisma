@@ -171,3 +171,4 @@ model workGrades {
   student   students @relation(fields: [studentId], references: [id], onDelete: Cascade)
   work      works    @relation(fields: [workId], references: [id], onDelete: Cascade)
 }
+  
