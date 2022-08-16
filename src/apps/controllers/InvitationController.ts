@@ -67,7 +67,9 @@ export default {
 
       const invitationDelete = prisma.invitations.delete({ where: { id }})
 
-      await prisma.$transaction([ studentClassroomCreate, invitationDelete ])
+      const banishment = prisma.bannedStudents.deleteMany({ where: { studentId: invitationExists.studentId, classroomId: invitationExists.classroomId }})
+
+      await prisma.$transaction([ studentClassroomCreate, invitationDelete, banishment ])
 
       return response.sendStatus(200)
 
