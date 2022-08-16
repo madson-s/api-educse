@@ -17,7 +17,7 @@ export default {
     }
     teacher.schools.push(school)
     await teacherRespository.save(teacher)
-    return response.sendStatus(204)
+    return response.sendStatus(200)
   },
 
   async remove(request: Request, response: Response) {

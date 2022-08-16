@@ -34,6 +34,7 @@ import StudentController from './apps/controllers/StudentController'
 // import ClassroomTokenController from './apps/controllers/ClassroomTokenController'
 import InvitationController from './apps/controllers/InvitationController'
 import WorkGradeController from './apps/controllers/WorkGradeController'
+import BanishimentController from './apps/controllers/BannedStudentController'
 
 
 const routes = Router()
@@ -115,5 +116,8 @@ routes.get('/student_revalidate', AuthController.studentRevalidate)
 
 routes.get('/work/:id/grade/template', WorkGradeController.getworkGradeTemplate)
 routes.post('/work/:id/grade', WorkGradeController.create)
+
+routes.post('/classroom/:idClassroom/ban/student/:idStudent', BanishimentController.create)
+routes.delete('/classroom/:idClassroom/ban/student/:idStudent', BanishimentController.remove)
 
 export default routes

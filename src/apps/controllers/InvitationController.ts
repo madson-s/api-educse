@@ -39,7 +39,7 @@ export default {
         accepted: false,
       }})
 
-      return response.status(201).send(invitation)
+      return response.status(200).send(invitation)
     } catch (error){
       response.status(500).send('internal server error')
     }

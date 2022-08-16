@@ -16,7 +16,7 @@ export default {
 
       await client.workGrades.create({ data })
     }
-    return response.sendStatus(204)
+    return response.sendStatus(200)
   },
 
   async getworkGradeTemplate(request: Request, response: Response) {

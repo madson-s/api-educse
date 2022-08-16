@@ -37,6 +37,7 @@ model classrooms {
   students_classrooms_classrooms students_classrooms_classrooms[]
   works                          works[]
   invitations                    invitations[]
+  bannedStudents bannedStudents[]
 }
 
 model documents {
@@ -119,6 +120,7 @@ model students {
   students_classrooms_classrooms students_classrooms_classrooms[]
   invitations                    invitations[]
   grades                         workGrades[]
+  bannedStudents bannedStudents[]
 }
 
 model students_classrooms_classrooms {
@@ -170,5 +172,13 @@ model workGrades {
   grade     Float
   student   students @relation(fields: [studentId], references: [id], onDelete: Cascade)
   work      works    @relation(fields: [workId], references: [id], onDelete: Cascade)
+}
+
+model bannedStudents {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  classroomId Int
+  student     students   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  classroom   classrooms @relation(fields: [classroomId], references: [id], onDelete: Cascade)
 }
   
