@@ -17,6 +17,8 @@ export default {
                 select: {
                   id: true,
                   name: true,
+                  email: true,
+                  username: true,
                 }
               }
             }
@@ -26,10 +28,10 @@ export default {
 
       if(!classroom) return response.status(400).send('classroom not found')
 
-      const students = classroom.bannedStudents.map(bannedStudent => ({
-        id: bannedStudent.student.id,
-        name: bannedStudent.student.name,
-      }))
+      const students = classroom.bannedStudents.map(bannedStudent => {
+        const { id, name, email, username } = bannedStudent.student
+        return { id, name, email, username }
+      })
 
       return response.json(students)
     } catch (error) {
