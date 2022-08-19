@@ -35,6 +35,7 @@ import StudentController from './apps/controllers/StudentController'
 import InvitationController from './apps/controllers/InvitationController'
 import WorkGradeController from './apps/controllers/WorkGradeController'
 import BanishimentController from './apps/controllers/BannedStudentController'
+import JoinRequestController from './apps/controllers/JoinRequestController'
 
 
 const routes = Router()
@@ -120,5 +121,10 @@ routes.post('/work/:id/grade', WorkGradeController.create)
 routes.get('/classroom/:idClassroom/ban/', BanishimentController.findClassroomBanishments)
 routes.post('/classroom/:idClassroom/ban/student/:idStudent', BanishimentController.create)
 routes.delete('/classroom/:idClassroom/ban/student/:idStudent', BanishimentController.remove)
+
+routes.get('/classroom/:classroom/joins', JoinRequestController.create)
+routes.get('/classroom/:classroom/join/student/:student', JoinRequestController.create)
+routes.post('/classroom/join/accept/:id', JoinRequestController.accept)
+routes.post('/classroom/join/reject/:id', JoinRequestController.remove)
 
 export default routes

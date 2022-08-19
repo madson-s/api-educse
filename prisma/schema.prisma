@@ -37,7 +37,8 @@ model classrooms {
   students_classrooms_classrooms students_classrooms_classrooms[]
   works                          works[]
   invitations                    invitations[]
-  bannedStudents bannedStudents[]
+  bannedStudents                 bannedStudents[]
+  joinRequests                   joinRequests[]
 }
 
 model documents {
@@ -120,7 +121,8 @@ model students {
   students_classrooms_classrooms students_classrooms_classrooms[]
   invitations                    invitations[]
   grades                         workGrades[]
-  bannedStudents bannedStudents[]
+  bannedStudents                 bannedStudents[]
+  joinRequests                   joinRequests[]
 }
 
 model students_classrooms_classrooms {
@@ -175,10 +177,17 @@ model workGrades {
 }
 
 model bannedStudents {
-  id        Int      @id @default(autoincrement())
-  studentId Int
+  id          Int        @id @default(autoincrement())
+  studentId   Int
   classroomId Int
   student     students   @relation(fields: [studentId], references: [id], onDelete: Cascade)
   classroom   classrooms @relation(fields: [classroomId], references: [id], onDelete: Cascade)
 }
-  
+
+model joinRequests {
+  id          Int        @id @default(autoincrement())
+  studentId   Int
+  classroomId Int
+  student     students   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  classroom   classrooms @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+}

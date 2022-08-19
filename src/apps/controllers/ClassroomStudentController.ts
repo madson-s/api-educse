@@ -32,14 +32,13 @@ export default {
     const classroomRespository = getRepository(Classroom)
     const studentRespository = getRepository(Student)
     
+    const prisma = new PrismaClient()
+    
     if(token) {
       const data  = jwt.verify(token, 'secret')
       const { id } = data as TokePayload
       classroomId = id
     }
-
-    const prisma = new PrismaClient()
-
     
     const classroom = await classroomRespository.findOne({ where: { id: classroomId }})
     const student = await studentRespository.findOne({ 
@@ -59,6 +58,16 @@ export default {
 
     if(bannedStudent) return response.sendStatus(400)
     
+    
+    if(token) {
+      await prisma.joinRequests.create({ data: {
+        studentId: student.id,
+        classroomId: classroom.id,
+      }})
+
+      return response.status(200).json(true)
+    }
+
     student.classrooms.push(classroom)
     
     await studentRespository.save(student)
