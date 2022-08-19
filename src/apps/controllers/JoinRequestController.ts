@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 export default {
   async findClassroomJoins(request: Request, response: Response) {
     try {
-      const id = Number(request.params.id)
+      const id = Number(request.params.classroom)
       
       const prisma = new PrismaClient()
 
