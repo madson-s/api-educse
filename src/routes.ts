@@ -123,7 +123,7 @@ routes.post('/classroom/:idClassroom/ban/student/:idStudent', BanishimentControl
 routes.delete('/classroom/:idClassroom/ban/student/:idStudent', BanishimentController.remove)
 
 routes.get('/classroom/:classroom/joins', JoinRequestController.create)
-routes.get('/classroom/:classroom/join/student/:student', JoinRequestController.create)
+routes.post('/classroom/:classroom/join/student/:student', JoinRequestController.create)
 routes.post('/classroom/join/accept/:id', JoinRequestController.accept)
 routes.post('/classroom/join/reject/:id', JoinRequestController.remove)
 
